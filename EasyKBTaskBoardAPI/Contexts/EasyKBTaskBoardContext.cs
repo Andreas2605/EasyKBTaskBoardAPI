@@ -15,6 +15,8 @@ namespace EasyKBTaskBoard.API.Contexts
         }
 
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<Board> Boards { get; set; }
+        public DbSet<Entities.Task> Tasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

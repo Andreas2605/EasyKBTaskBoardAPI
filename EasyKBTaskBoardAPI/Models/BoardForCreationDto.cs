@@ -11,7 +11,10 @@ namespace EasyKBTaskBoard.API.Models
         [Required]
         public string Name { get; set; }
 
-        public ICollection<Task> Tasks { get; set; }
-            = new List<Task>();
+        public ICollection<TaskDto> Tasks { get; set; }
+            = new List<TaskDto>();
+
+        public ICollection<AccountDto> Members { get; set; }
+            = new List<AccountDto>();
     }
 }

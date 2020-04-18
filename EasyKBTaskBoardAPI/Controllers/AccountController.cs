@@ -22,10 +22,10 @@ namespace EasyKBTaskBoard.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{userId}")]
-        public ActionResult GetAccount(int userId)
+        [HttpGet("{accountId}")]
+        public ActionResult GetAccount(int accountId)
         {
-            var account = _easyKBTaskBoardRepository.GetAccount(userId);
+            var account = _easyKBTaskBoardRepository.GetAccount(accountId);
 
             if (account == null)
             {

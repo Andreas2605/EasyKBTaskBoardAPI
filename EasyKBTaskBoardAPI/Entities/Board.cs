@@ -14,6 +14,9 @@ namespace EasyKBTaskBoard.API.Entities
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        [ForeignKey("AccountId")]
+        public Account Account { get; set; }
+        public int AccountId { get; set; }
 
         public ICollection<Task> Tasks { get; set; } 
             = new List<Task>();
