@@ -5,6 +5,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200415181039_EasyKBTaskBoardInitialMigration.cs" />
+    <Compile Remove="Migrations\20200415181039_EasyKBTaskBoardInitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200419170837_AddedNewTables.cs" />
+    <Compile Remove="Migrations\20200419170837_AddedNewTables.Designer.cs" />
+    <Compile Remove="Migrations\20200419171453_FixedIds.cs" />
+    <Compile Remove="Migrations\20200419171453_FixedIds.Designer.cs" />
+    <Compile Remove="Migrations\20200419172150_FixedIds.cs" />
+    <Compile Remove="Migrations\20200419172150_FixedIds.Designer.cs" />
+    <Compile Remove="Migrations\20200419172343_FixedIds.cs" />
+    <Compile Remove="Migrations\20200419172343_FixedIds.Designer.cs" />
+    <Compile Remove="Migrations\20200419172858_FixedIds.cs" />
+    <Compile Remove="Migrations\20200419172858_FixedIds.Designer.cs" />
+    <Compile Remove="Migrations\20200419172952_FixedIds.cs" />
+    <Compile Remove="Migrations\20200419172952_FixedIds.Designer.cs" />
+    <Compile Remove="Migrations\20200419173614_AddedNewTables.cs" />
+    <Compile Remove="Migrations\20200419173614_AddedNewTables.Designer.cs" />
+    <Compile Remove="Migrations\20200419173940_AddedNewTables.cs" />
+    <Compile Remove="Migrations\20200419173940_AddedNewTables.Designer.cs" />
+    <Compile Remove="Migrations\20200419174127_AddedNewTables.cs" />
+    <Compile Remove="Migrations\20200419174127_AddedNewTables.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />

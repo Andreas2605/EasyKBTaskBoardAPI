@@ -4,14 +4,16 @@ using EasyKBTaskBoard.API.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EasyKBTaskBoard.API.Migrations
 {
     [DbContext(typeof(EasyKBTaskBoardContext))]
-    partial class EasyKBTaskBoardContextModelSnapshot : ModelSnapshot
+    [Migration("20200419174901_EasyKBTaskBoardInitialMigration")]
+    partial class EasyKBTaskBoardInitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,24 +54,6 @@ namespace EasyKBTaskBoard.API.Migrations
                     b.HasIndex("TaskId");
 
                     b.ToTable("Accounts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "akolenda73@gmail.com",
-                            FirstName = "Andreas",
-                            LastName = "Kolenda",
-                            Password = "test123"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Email = "carlo.tamburin@gmail.com",
-                            FirstName = "Carlo",
-                            LastName = "Tamburin",
-                            Password = "test321"
-                        });
                 });
 
             modelBuilder.Entity("EasyKBTaskBoard.API.Entities.Board", b =>

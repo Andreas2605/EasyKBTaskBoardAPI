@@ -20,5 +20,8 @@ namespace EasyKBTaskBoard.API.Entities
 
         public ICollection<Task> Tasks { get; set; } 
             = new List<Task>();
+
+        public ICollection<Column> Columns { get; set; }
+            = new List<Column>();
     }
 }

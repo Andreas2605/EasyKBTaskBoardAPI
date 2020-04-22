@@ -43,42 +43,55 @@ namespace EasyKBTaskBoard.API.Services
 
         public void AddAccount(Account account)
         {
-            throw new NotImplementedException();
+            _context.Accounts.Add(account);
         }
 
-        public void DeleteAccount(int accountId)
+        public void UpdateAccount(Account account)
         {
-            throw new NotImplementedException();
+
+        }
+
+        public void DeleteAccount(Account account)
+        {
+            _context.Accounts.Remove(account);
         }
 
         public void AddBoardForAccount(int accountId, Board board)
         {
-            throw new NotImplementedException();
+            var account = GetAccount(accountId);
+            account.Boards.Add(board);
+        }
+
+        public void UpdateBoardForAccount(int accountId, Board board)
+        {
+
         }
 
         public void DeleteBoard(Board board)
         {
-            throw new NotImplementedException();
+            _context.Boards.Remove(board);
         }
 
-        public void AddColumnToBoard(Column column)
+        public void AddColumnToBoard(int boardId, Column column)
         {
-            throw new NotImplementedException();
+            var board = _context.Boards.Where(c => c.Id == boardId).FirstOrDefault();
+            board.Columns.Add(column);
         }
 
-        public void UpdateColumnForBoard(int boardId, Column column)
+        public void UpdateColumnToBoard(int boardId, Column column)
         {
-            throw new NotImplementedException();
+           
         }
 
-        public void AddTaskToBoard(int boardId, Entities.Task task)
+        public void AddTaskToColumn(int columnId, Entities.Task task)
         {
-            throw new NotImplementedException();
+            var column = _context.Columns.Where(c => c.Id == columnId).FirstOrDefault();
+            column.Tasks.Add(task);
         }
 
         public void DeleteTask(Entities.Task task)
         {
-            throw new NotImplementedException();
+            _context.Tasks.Remove(task);
         }
 
         public bool Save()

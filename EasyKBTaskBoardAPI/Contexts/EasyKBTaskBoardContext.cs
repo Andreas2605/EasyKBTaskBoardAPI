@@ -9,7 +9,7 @@ namespace EasyKBTaskBoard.API.Contexts
 {
     public class EasyKBTaskBoardContext : DbContext
     {
-        public EasyKBTaskBoardContext(DbContextOptions<EasyKBTaskBoardContext> options) 
+        public EasyKBTaskBoardContext(DbContextOptions<EasyKBTaskBoardContext> options)
             : base(options)
         {
         }
@@ -17,17 +17,10 @@ namespace EasyKBTaskBoard.API.Contexts
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Board> Boards { get; set; }
         public DbSet<Entities.Task> Tasks { get; set; }
+        public DbSet<Column> Columns { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasSequence<int>("Ids", schema: "dbo")
-                .StartsAt(1)
-                .IncrementsBy(1);
-
-            modelBuilder.Entity<Account>()
-                .Property(o => o.Id)
-                .HasDefaultValueSql("NEXT VALUE FOR dbo.Ids");
-
             modelBuilder.Entity<Account>().HasData(
                 new Account()
                 {

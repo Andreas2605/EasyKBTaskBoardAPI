@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace EasyKBTaskBoard.API.Models
 {
-    public class BoardForCreationDto
+    public class BoardForUpdateDto
     {
         [Required]
         public string Name { get; set; }
-
-        public ICollection<AccountDto> Members { get; set; }
-            = new List<AccountDto>();
     }
 }

@@ -17,6 +17,7 @@ namespace EasyKBTaskBoard.API.Profiles
                 );
 
             CreateMap<Models.AccountForCreationDto, Entities.Account>();
+            CreateMap<Models.AccountForUpdateDto, Entities.Account>().ReverseMap();
         }
     }
 }

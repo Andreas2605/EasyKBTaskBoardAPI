@@ -14,12 +14,14 @@ namespace EasyKBTaskBoard.API.Services
         Board GetBoardForAccount(int accountId, int boardId);
         IEnumerable<Board> GetBoardsForAccount(int accountId);
         void AddAccount(Account account);
-        void DeleteAccount(int accountId);
+        void UpdateAccount(Account account);
+        void DeleteAccount(Account account);
         void AddBoardForAccount(int accountId, Board board);
+        void UpdateBoardForAccount(int accountId, Board board);
         void DeleteBoard(Board board);
-        void AddColumnToBoard(Column column);
-        void UpdateColumnForBoard(int boardId, Column column);
-        void AddTaskToBoard(int boardId, Entities.Task task);
+        void AddColumnToBoard(int boardId, Column column);
+        void UpdateColumnToBoard(int boardId, Column column);
+        void AddTaskToColumn(int columnId, Entities.Task task);
         void DeleteTask(Entities.Task task);
         bool Save();
     }

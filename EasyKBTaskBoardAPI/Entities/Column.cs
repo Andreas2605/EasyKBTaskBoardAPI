@@ -17,5 +17,8 @@ namespace EasyKBTaskBoard.API.Entities
         public string Name { get; set; }
         [MaxLength(500)]
         public string Description { get; set; }
+        
+        public ICollection<Task> Tasks { get; set; } 
+            = new List<Task>();
     }
 }

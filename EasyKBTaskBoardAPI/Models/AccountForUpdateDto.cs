@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EasyKBTaskBoard.API.Entities
+namespace EasyKBTaskBoard.API.Models
 {
-    public class Account
+    public class AccountForUpdateDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
         [Required]
         [MaxLength(50)]
         public string FirstName { get; set; }
@@ -23,8 +19,5 @@ namespace EasyKBTaskBoard.API.Entities
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
-        public ICollection<Board> Boards { get; set; }
-            = new List<Board>();
     }
 }
