@@ -34,10 +34,11 @@ namespace EasyKBTaskBoard.API
                 .AddNewtonsoftJson(setupAction =>
                 {
                     setupAction.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    setupAction.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 })
-                .AddMvcOptions(o => 
+                .AddMvcOptions(o =>
                 {
-                    o.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());  
+                    o.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
                 });
 
             var connectionString = Configuration["connectionStrings:easyKBTaskBoardDBConnectionString"];

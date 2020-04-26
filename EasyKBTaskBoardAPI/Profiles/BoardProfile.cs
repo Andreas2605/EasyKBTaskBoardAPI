@@ -15,6 +15,7 @@ namespace EasyKBTaskBoard.API.Profiles
             CreateMap<Board, BoardDto>();
             CreateMap<BoardForCreationDto, Board>();
             CreateMap<BoardForUpdateDto, Board>().ReverseMap();
+            CreateMap<Board, BoardWithOnlyNameAndIdDto>();
         }
     }
 }

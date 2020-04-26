@@ -6,17 +6,12 @@ using System.Threading.Tasks;
 
 namespace EasyKBTaskBoard.API.Models
 {
-    public class TaskForCreationDto
+    public class ColumnForUpdateDto
     {
         [Required]
-        [MaxLength(100)]
+        [MaxLength(30)]
         public string Name { get; set; }
+        [MaxLength(500)]
         public string Description { get; set; }
-        public string Color { get; set; }
-        [Required]
-        public int ColumnId { get; set; }
-
-        public ICollection<AccountWithIdAndNameDto> Members { get; set; }
-            = new List<AccountWithIdAndNameDto>();
     }
 }

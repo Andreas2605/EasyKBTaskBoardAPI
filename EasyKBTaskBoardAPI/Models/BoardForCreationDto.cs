@@ -10,8 +10,7 @@ namespace EasyKBTaskBoard.API.Models
     {
         [Required]
         public string Name { get; set; }
-
-        public ICollection<AccountDto> Members { get; set; }
-            = new List<AccountDto>();
+        [Required]
+        public int AccountId { get; set; }
     }
 }

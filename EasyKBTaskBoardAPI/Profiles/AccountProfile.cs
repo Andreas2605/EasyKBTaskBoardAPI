@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using EasyKBTaskBoard.API.Entities;
+using EasyKBTaskBoard.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +12,20 @@ namespace EasyKBTaskBoard.API.Profiles
     {
         public AccountProfile()
         {
-            CreateMap<Entities.Account, Models.AccountDto>()
+            CreateMap<Account, AccountDto>()
                 .ForMember(
                 dest => dest.Name,
                 opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}")
                 );
 
-            CreateMap<Models.AccountForCreationDto, Entities.Account>();
-            CreateMap<Models.AccountForUpdateDto, Entities.Account>().ReverseMap();
+            CreateMap<AccountForCreationDto, Account>();
+            CreateMap<AccountForUpdateDto, Account>().ReverseMap();
+            CreateMap<Account, AccountWithIdAndNameDto > ()
+                 .ForMember(
+                dest => dest.Name,
+                opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}")
+                )
+                 .ReverseMap();
         }
     }
 }

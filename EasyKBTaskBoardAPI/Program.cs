@@ -23,7 +23,7 @@ namespace EasyKBTaskBoard.API
                 try
                 {
                     var context = scope.ServiceProvider.GetService<EasyKBTaskBoardContext>();
-  
+
                     context.Database.Migrate();
                 }
                 catch (Exception ex)

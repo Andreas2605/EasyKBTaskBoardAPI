@@ -5,14 +5,9 @@ using System.Threading.Tasks;
 
 namespace EasyKBTaskBoard.API.Models
 {
-    public class AccountDto
+    public class BoardWithOnlyNameAndIdDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-
-        public ICollection<BoardDto> Boards { get; set; }
-            = new List<BoardDto>();
     }
 }

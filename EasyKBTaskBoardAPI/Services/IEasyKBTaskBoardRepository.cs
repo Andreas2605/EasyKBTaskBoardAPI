@@ -11,18 +11,24 @@ namespace EasyKBTaskBoard.API.Services
         IEnumerable<Account> GetAccounts();
         Account GetAccount(int accountId);
         bool AccountExists(int accountId);
-        Board GetBoardForAccount(int accountId, int boardId);
-        IEnumerable<Board> GetBoardsForAccount(int accountId);
         void AddAccount(Account account);
         void UpdateAccount(Account account);
         void DeleteAccount(Account account);
-        void AddBoardForAccount(int accountId, Board board);
-        void UpdateBoardForAccount(int accountId, Board board);
+        Board GetBoard(int boardId);
+        IEnumerable<Board> GetBoardsForAccount(int accountId);
+        void AddBoard(Board board);
+        void UpdateBoard(Board board);
         void DeleteBoard(Board board);
+        IEnumerable<Column> GetColumnsForBoard(int boardId);
+        Column GetColumnForBoard(int boardId, int columnId);
         void AddColumnToBoard(int boardId, Column column);
-        void UpdateColumnToBoard(int boardId, Column column);
-        void AddTaskToColumn(int columnId, Entities.Task task);
+        void UpdateColumnForBoard(int boardId, Column column);
+        void DeleteColumn(Column column);
+        Entities.Task GetTask(int taskId);
+        void AddTask(Entities.Task task);
+        void UpdateTask(Entities.Task task);
         void DeleteTask(Entities.Task task);
+        void AddAccountToTask(int accountId, int taskId);
         bool Save();
     }
 }

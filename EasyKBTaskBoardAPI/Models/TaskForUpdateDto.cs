@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 
 namespace EasyKBTaskBoard.API.Models
 {
-    public class TaskDto
+    public class TaskForUpdateDto
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Color { get; set; }
 
-        public ICollection<AccountWithIdAndNameDto> Members { get; set; }
-            = new List<AccountWithIdAndNameDto>();
+        public ICollection<AccountDto> Members { get; set; }
+            = new List<AccountDto>();
     }
 }

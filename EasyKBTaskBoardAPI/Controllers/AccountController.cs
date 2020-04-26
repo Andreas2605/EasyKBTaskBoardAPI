@@ -61,7 +61,7 @@ namespace EasyKBTaskBoard.API.Controllers
                 accountToReturn);
         }
 
-        [HttpPatch("{accountId")]
+        [HttpPatch("{accountId}")]
         public ActionResult PartiallyUpdateAccount(int accountId, [FromBody] JsonPatchDocument<AccountForUpdateDto> patchDoc)
         {
             var accountEntity = _easyKBTaskBoardRepository.GetAccount(accountId);
@@ -88,7 +88,7 @@ namespace EasyKBTaskBoard.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{accountId")]
+        [HttpDelete("{accountId}")]
         public ActionResult DeleteAccount(int accountId)
         {
             var accountToDelete = _easyKBTaskBoardRepository.GetAccount(accountId);

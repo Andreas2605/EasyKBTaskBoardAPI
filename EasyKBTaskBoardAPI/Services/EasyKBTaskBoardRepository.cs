@@ -1,5 +1,6 @@
 ﻿using EasyKBTaskBoard.API.Contexts;
 using EasyKBTaskBoard.API.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,27 +19,17 @@ namespace EasyKBTaskBoard.API.Services
 
         public IEnumerable<Account> GetAccounts()
         {
-            return _context.Accounts.OrderBy(c => c.FirstName).ToList();
+            return _context.Accounts.OrderBy(a => a.FirstName).ToList();
         }
 
         public Account GetAccount(int accountId)
         {
-            return _context.Accounts.Where(c => c.Id == accountId).FirstOrDefault();
+            return _context.Accounts.Include(a => a.Boards).Where(a => a.Id == accountId).FirstOrDefault();
         }
 
         public bool AccountExists(int accountId)
         {
-            return (_context.Accounts.Any(c => c.Id == accountId));
-        }
-
-        public Board GetBoardForAccount(int accountId, int boardId)
-        {
-            return _context.Boards.Where(p => p.AccountId == accountId && p.Id == boardId).FirstOrDefault();
-        }
-
-        public IEnumerable<Board> GetBoardsForAccount(int accountId)
-        {
-            return _context.Boards.Where(p => p.AccountId == accountId).ToList();
+            return (_context.Accounts.Any(a => a.Id == accountId));
         }
 
         public void AddAccount(Account account)
@@ -56,13 +47,22 @@ namespace EasyKBTaskBoard.API.Services
             _context.Accounts.Remove(account);
         }
 
-        public void AddBoardForAccount(int accountId, Board board)
+        public Board GetBoard(int boardId)
         {
-            var account = GetAccount(accountId);
-            account.Boards.Add(board);
+            return _context.Boards.Include(b => b.Account).Include(b => b.Columns).Where(b => b.Id == boardId).FirstOrDefault();
         }
 
-        public void UpdateBoardForAccount(int accountId, Board board)
+        public IEnumerable<Board> GetBoardsForAccount(int accountId)
+        {
+            return _context.Boards.Where(a => a.AccountId == accountId);
+        }
+
+        public void AddBoard(Board board)
+        {
+            _context.Boards.Add(board);
+        }
+
+        public void UpdateBoard(Board board)
         {
 
         }
@@ -72,21 +72,45 @@ namespace EasyKBTaskBoard.API.Services
             _context.Boards.Remove(board);
         }
 
+        public IEnumerable<Column> GetColumnsForBoard(int boardId)
+        {
+            return _context.Columns.Include(b => b.Tasks).Where(b => b.BoardId == boardId).ToList();
+        }
+
+        public Column GetColumnForBoard(int boardId, int columnId)
+        {
+            return _context.Columns.Include(b => b.Tasks).Where(b => b.BoardId == boardId && b.Id == columnId).FirstOrDefault();
+        }
+
         public void AddColumnToBoard(int boardId, Column column)
         {
-            var board = _context.Boards.Where(c => c.Id == boardId).FirstOrDefault();
+            var board = _context.Boards.Where(b => b.Id == boardId).FirstOrDefault();
             board.Columns.Add(column);
         }
 
-        public void UpdateColumnToBoard(int boardId, Column column)
+        public void UpdateColumnForBoard(int boardId, Column column)
         {
            
         }
 
-        public void AddTaskToColumn(int columnId, Entities.Task task)
+        public void DeleteColumn(Column column)
         {
-            var column = _context.Columns.Where(c => c.Id == columnId).FirstOrDefault();
-            column.Tasks.Add(task);
+            _context.Columns.Remove(column);
+        }
+
+        public Entities.Task GetTask(int taskId)
+        {
+            return _context.Tasks.Include(t => t.Members).Where(t => t.Id == taskId).FirstOrDefault();
+        }
+
+        public void AddTask(Entities.Task task)
+        {
+            _context.Tasks.Add(task);
+        }
+
+        public void UpdateTask(Entities.Task task)
+        {
+
         }
 
         public void DeleteTask(Entities.Task task)
@@ -94,10 +118,16 @@ namespace EasyKBTaskBoard.API.Services
             _context.Tasks.Remove(task);
         }
 
+        public void AddAccountToTask(int accountId, int taskId)
+        {
+            var account = GetAccount(accountId);
+            var task = GetTask(taskId);
+            task.Members.Add(account);
+        }
+
         public bool Save()
         {
             return (_context.SaveChanges() >= 0);
         }
-
     }
 }

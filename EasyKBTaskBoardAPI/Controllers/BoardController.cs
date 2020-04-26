@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace EasyKBTaskBoard.API.Controllers
 {
     [ApiController]
-    [Route("api/accounts/{accountId}/boards")]
+    [Route("api/board")]
     public class BoardController : ControllerBase
     {
         private readonly IEasyKBTaskBoardRepository _easyKBTaskBoardRepository;
@@ -21,82 +21,53 @@ namespace EasyKBTaskBoard.API.Controllers
         private readonly ILogger _logger;
 
         public BoardController(IEasyKBTaskBoardRepository easyKBTaskBoardRepository, IMapper mapper,
-            ILogger logger)
+            ILogger<BoardController> logger)
         {
             _easyKBTaskBoardRepository = easyKBTaskBoardRepository;
             _mapper = mapper;
             _logger = logger;
         }
 
-        [HttpGet]
-        public ActionResult GetBoards(int accountId)
-        {
-            try
-            {
-                if (!_easyKBTaskBoardRepository.AccountExists(accountId))
-                {
-                    return NotFound();
-                }
-
-                var boardsForAccount = _easyKBTaskBoardRepository.GetBoardsForAccount(accountId);
-                return Ok(_mapper.Map<BoardDto>(boardsForAccount));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogCritical($"Exception while getting boards for account with id {accountId}.", ex);
-                return StatusCode(500, "A problem occured while handling your request");
-            }
-        }
-
         [HttpGet("{boardId}", Name = "GetBoard")]
-        public ActionResult GetBoard(int accountId, int boardId)
+        public ActionResult GetBoard(int boardId)
         {
-            if (!_easyKBTaskBoardRepository.AccountExists(accountId))
+            var boardEntity = _easyKBTaskBoardRepository.GetBoard(boardId);
+
+            if (boardEntity == null)
             {
                 return NotFound();
             }
 
-            var board = _easyKBTaskBoardRepository.GetBoardForAccount(accountId, boardId);
-
-            if (board == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(_mapper.Map<BoardDto>(board));
+            return Ok(_mapper.Map<BoardDto>(boardEntity));
         }
 
         [HttpPost]
-        public ActionResult CreateBoard(int accountId, [FromBody] BoardForCreationDto board)
+        public ActionResult CreateBoard([FromBody] BoardForCreationDto board)
         {
-            if (!_easyKBTaskBoardRepository.AccountExists(accountId))
-            {
-                return NotFound();
-            }
-
             var boardEntity = _mapper.Map<Board>(board);
 
-            _easyKBTaskBoardRepository.AddBoardForAccount(accountId, boardEntity);
-            _easyKBTaskBoardRepository.Save();
-
+            try
+            {
+                _easyKBTaskBoardRepository.AddBoard(boardEntity);
+                _easyKBTaskBoardRepository.Save();
+            }
+            catch (Exception)
+            {
+                return NotFound($"Account with id {board.AccountId} couldn't be found.\nCreating failed.");
+            }
+          
             var createdBoardToReturn = _mapper.Map<BoardDto>(boardEntity);
 
             return CreatedAtRoute(
                 "GetBoard",
-                new { accountId, id = createdBoardToReturn.Id },
+                new { boardId = createdBoardToReturn.Id },
                 createdBoardToReturn);
         }
 
         [HttpPatch("{boardId}")]
-        public ActionResult EditBoardName (int accountId, int boardId,
-            [FromBody] JsonPatchDocument<BoardForUpdateDto> patchDoc)
+        public ActionResult EditBoardName(int boardId, [FromBody] JsonPatchDocument<BoardForUpdateDto> patchDoc)
         {
-            if (!_easyKBTaskBoardRepository.AccountExists(accountId))
-            {
-                return NotFound();
-            }
-
-            var boardEntity = _easyKBTaskBoardRepository.GetBoardForAccount(accountId, boardId);
+            var boardEntity = _easyKBTaskBoardRepository.GetBoard(boardId);
             if (boardEntity == null)
             {
                 return NotFound();
@@ -112,21 +83,16 @@ namespace EasyKBTaskBoard.API.Controllers
 
             _mapper.Map(boardToPatch, boardEntity);
 
-            _easyKBTaskBoardRepository.UpdateBoardForAccount(accountId, boardEntity);
+            _easyKBTaskBoardRepository.UpdateBoard(boardEntity);
             _easyKBTaskBoardRepository.Save();
 
             return NoContent();
         }
 
         [HttpDelete("{boardId}")]
-        public ActionResult DeleteBoard(int accountId, int boardId)
+        public ActionResult DeleteBoard(int boardId)
         {
-            if (!_easyKBTaskBoardRepository.AccountExists(accountId))
-            {
-                return NotFound();
-            }
-
-            var boardToDelete = _easyKBTaskBoardRepository.GetBoardForAccount(accountId, boardId);
+            var boardToDelete = _easyKBTaskBoardRepository.GetBoard(boardId);
 
             if (boardToDelete == null)
             {

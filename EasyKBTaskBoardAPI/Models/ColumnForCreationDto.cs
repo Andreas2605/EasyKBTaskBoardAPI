@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace EasyKBTaskBoard.API.Models
 {
-    public class ColumnForEditDto
+    public class ColumnForCreationDto
     {
         [Required]
         [MaxLength(30)]
         public string Name { get; set; }
-        [MaxLength(500)]
-        public string Description { get; set; }
     }
 }
